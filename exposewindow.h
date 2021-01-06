@@ -29,11 +29,9 @@ private slots:
 
     void on_add_button_clicked();
     void on_delete_button_clicked();
-
     void on_re_verification_button_clicked();
     void on_menu_button_clicked();
     void on_view_vacancy_button_clicked();
-
     void on_tableView_doubleClicked();
 
 private:
@@ -42,8 +40,8 @@ private:
     DataBase            *database;
     QSqlQueryModel      *query_model;
     Verification        *verification;
-    MainWindow          *wi;
-    VacancyViewWindow   *vvw;
+    MainWindow          *main_window;
+    VacancyViewWindow   *vacancy_view_window;
 
     void update_table_view();
 };

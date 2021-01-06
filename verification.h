@@ -29,7 +29,7 @@ private slots:
 private:
     Ui::Verification        *ui;
     ExposeWindow            *expose_window;
-    AccountDataBase         *adb;
+    AccountDataBase         *account_database;
     QSqlQueryModel          *query_model;
 };
 

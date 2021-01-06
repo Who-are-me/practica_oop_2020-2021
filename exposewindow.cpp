@@ -30,7 +30,13 @@ ExposeWindow::ExposeWindow(QString login, QWidget *parent) :
 }
 
 ExposeWindow::~ExposeWindow() {
-    delete ui;
+
+    delete ui;  
+    delete database;
+    delete query_model;
+    delete verification;
+    delete main_window;
+    delete vacancy_view_window;
 }
 
 void ExposeWindow::update_table_view() {
@@ -90,14 +96,16 @@ void ExposeWindow::on_add_button_clicked() {
 }
 
 void ExposeWindow::on_delete_button_clicked() {   
-    int del_index = query_model->data(query_model->index(ui->tableView->currentIndex().row(), 0)).toInt();
 
-    database->deleteFromTable(del_index);
+    int index_of_del = query_model->data(query_model->index(ui->tableView->currentIndex().row(), 0)).toInt();
+
+    database->deleteFromTable(index_of_del);
     update_table_view();
 }
 
 void ExposeWindow::on_re_verification_button_clicked() {
-    hide();
+
+    close();
     verification = new Verification(this);
     verification->setWindowTitle("Verification");
     verification->resize(400, 300);
@@ -105,23 +113,26 @@ void ExposeWindow::on_re_verification_button_clicked() {
 }
 
 void ExposeWindow::on_menu_button_clicked() {
-    hide();
-    wi = new MainWindow(this);
-    wi->setWindowTitle("Menu");
-    wi->resize(610, 430);
-    wi->show();
+
+    close();
+    main_window = new MainWindow(this);
+    main_window->setWindowTitle("Menu");
+    main_window->resize(610, 430);
+    main_window->show();
 }
 
 void ExposeWindow::on_view_vacancy_button_clicked() {
-    vvw = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
-    vvw->setWindowTitle("Vacancy");
-    vvw->resize(700, 500);
-    vvw->show();
+
+    vacancy_view_window = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
+    vacancy_view_window->setWindowTitle("Vacancy");
+    vacancy_view_window->resize(700, 500);
+    vacancy_view_window->show();
 }
 
 void ExposeWindow::on_tableView_doubleClicked() {
-    vvw = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
-    vvw->setWindowTitle("Vacancy");
-    vvw->resize(700, 500);
-    vvw->show();
+
+    vacancy_view_window = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
+    vacancy_view_window->setWindowTitle("Vacancy");
+    vacancy_view_window->resize(700, 500);
+    vacancy_view_window->show();
 }

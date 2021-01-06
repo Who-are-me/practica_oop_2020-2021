@@ -24,5 +24,8 @@ VacancyViewWindow::VacancyViewWindow(int id, QWidget *parent) :
 }
 
 VacancyViewWindow::~VacancyViewWindow() {
+
     delete ui;
+    delete database;
+    delete query_model;
 }

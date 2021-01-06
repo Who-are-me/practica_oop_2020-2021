@@ -24,19 +24,18 @@ public:
 
 private slots:
     void on_view_vacancy_button_clicked();
-    void on_find_button_clicked();
-    void on_menu_button_clicked();
-
     void on_tableView_doubleClicked();
+    void on_find_button_clicked();
+    void on_menu_button_clicked();  
 
 private:
     Ui::FindWindow      *ui;
     DataBase            *database;
     QSqlQueryModel      *query_model;
-    MainWindow          *mw;
-    VacancyViewWindow   *vvw;
+    MainWindow          *main_window;
+    VacancyViewWindow   *vacancy_view_window;
 
-    void update_table_view(QString where);
+    void update_table_view(QString where = "");
 };
 
 #endif // FINDWINDOW_H

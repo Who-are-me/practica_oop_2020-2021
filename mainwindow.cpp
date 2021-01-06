@@ -25,20 +25,26 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
+
     delete ui;
+    delete find_window;
+    delete verification;
 }
 
 
 void MainWindow::on_expose_button_clicked() {
-    hide();
+
+    close();
     verification = new Verification(this);
     verification->setWindowTitle("Verification");
     verification->resize(400, 300);
     verification->show();
+
 }
 
 void MainWindow::on_find_button_clicked() {
-    hide();
+
+    close();
     find_window = new FindWindow(this);
     find_window->setWindowTitle("Find vacancy");
     find_window->resize(800, 500);

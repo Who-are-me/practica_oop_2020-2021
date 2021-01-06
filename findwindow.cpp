@@ -11,7 +11,7 @@ FindWindow::FindWindow(QWidget *parent) :
     database->connectToDataBase();
 
     query_model = new QSqlQueryModel;
-    update_table_view("");
+    update_table_view();
 
     QPalette palette;
     palette.setColor(QPalette::Base, Qt::yellow);
@@ -25,10 +25,16 @@ FindWindow::FindWindow(QWidget *parent) :
 }
 
 FindWindow::~FindWindow() {
+
     delete ui;
+    delete database;
+    delete main_window;
+    delete query_model;
+    delete vacancy_view_window;
 }
 
 void FindWindow::on_find_button_clicked() {
+
     QString where = "where ";
 
     if (ui->city_lineEdit->text() != "") {
@@ -53,21 +59,32 @@ void FindWindow::on_find_button_clicked() {
 }
 
 void FindWindow::on_menu_button_clicked() {
-    hide();
-    mw = new MainWindow(this);
-    mw->setWindowTitle("Menu");
-    mw->resize(610, 430);
-    mw->show();
+
+    close();
+    main_window = new MainWindow(this);
+    main_window->setWindowTitle("Menu");
+    main_window->resize(610, 430);
+    main_window->show();
 }
 
 void FindWindow::on_view_vacancy_button_clicked() {
-    vvw = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
-    vvw->setWindowTitle("Vacancy");
-    vvw->resize(700, 500);
-    vvw->show();
+
+    vacancy_view_window = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
+    vacancy_view_window->setWindowTitle("Vacancy");
+    vacancy_view_window->resize(700, 500);
+    vacancy_view_window->show();
+}
+
+void FindWindow::on_tableView_doubleClicked() {
+
+    vacancy_view_window = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
+    vacancy_view_window->setWindowTitle("Vacancy");
+    vacancy_view_window->resize(700, 500);
+    vacancy_view_window->show();
 }
 
 void FindWindow::update_table_view(QString where) {
+
     query_model->setQuery("SELECT * FROM " TABLE " " + where );
 
     query_model->setHeaderData(0,Qt::Horizontal,  tr("id"));
@@ -89,12 +106,7 @@ void FindWindow::update_table_view(QString where) {
     ui->tableView->horizontalHeader()->setStretchLastSection(true);
 }
 
-void FindWindow::on_tableView_doubleClicked() {
-    vvw = new VacancyViewWindow(query_model->data(query_model->index(ui->tableView->currentIndex().row(),0)).toInt(), this);
-    vvw->setWindowTitle("Vacancy");
-    vvw->resize(700, 500);
-    vvw->show();
-}
+
 
 
 
